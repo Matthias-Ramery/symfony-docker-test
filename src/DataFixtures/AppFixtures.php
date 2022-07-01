@@ -10,7 +10,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $countryToPush = array("FR", "BE", "DE", "ES", "NE");
+        $countryToPush = array("FR", "BE", "DE", "ES", "NL");
 
         for ($p = 0; $p < count($countryToPush); $p++) {
             $country = new Country();

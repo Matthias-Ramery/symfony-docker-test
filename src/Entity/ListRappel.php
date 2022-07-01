@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\ListRappelRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use libphonenumber\PhoneNumber as AssertPhoneNumber;
 
 #[ORM\Entity(repositoryClass: ListRappelRepository::class)]
 class ListRappel
@@ -22,8 +21,7 @@ class ListRappel
     private $lastName;
 
     #[ORM\Column(type: 'string', length: 15)]
-    #[AssertPhoneNumber]
-    #[Assert\NotBlank]
+    #[Assert\Regex('/^\d{10}/')]
     private $phoneNumberNational;
 
     #[ORM\Column(type: 'string', length: 15)]
