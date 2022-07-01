@@ -23,6 +23,19 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
 
 
+
+        //si le formulaire est valide est s'il est envoyé
+        if($form->isSubmitted() && $form->isValid()) {
+            //dd($form->getData());
+            //enregistrement en bdd
+            $entityManager->persist($listRappel);
+            $entityManager->flush();
+
+            //redirection vers la route 'form'
+            return $this->redirectToRoute('success');
+        }
+
+
         return $this->render('home/index.html.twig', [
             'form' => $form->createView()
         ]);
