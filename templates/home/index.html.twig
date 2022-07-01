@@ -1,20 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/srv/app/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/srv/app/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <style>
+        #body { width: 40%; border: 1px solid gray; margin-left: 30%; margin-right: 30%; margin-top: 5%; padding: 20px;}
+        #form { display: flex; flex-direction: column; align-items: center;  }
+        #title { text-align: center; }
+        #submit { margin-left: 50%; }
+        .input { margin: 10px; width: 400px; }
+    </style>
+
+    <div id="body">
+        {{ form_start(form) }}
+
+        <h1 id="title">Fiche Contact</h1>
+
+        <div id="form">
+            <div class="input" class="form-group">
+                {{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}
+
+            </div>
+            <div class="input" class="form-group">
+                {{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}
+
+            </div>
+            <div class="input" class="form-group">
+                {{ form_row(form.countryCode, {'attr': {'class': 'form-control'}}) }}
+
+            </div>
+            <div class="input" class="form-group">
+                {{ form_row(form.phoneNumberNational, {'attr': {'class': 'form-control'}}) }}
+
+            </div>
+            <div class="input form-group" id="submit">
+                {{ form_row(form.send, {'attr': {'class': 'btn btn-primary'}}) }}
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+
 {% endblock %}
+

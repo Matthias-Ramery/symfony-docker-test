@@ -19,14 +19,15 @@ class ListRappel
     #[ORM\Column(type: 'string', length: 255)]
     private $lastName;
 
-    #[ORM\Column(type: 'string', length: 50)]
-    private $country;
-
     #[ORM\Column(type: 'string', length: 15)]
     private $phoneNumberNational;
 
     #[ORM\Column(type: 'string', length: 15)]
     private $phoneNumberInternational;
+
+    #[ORM\ManyToOne(targetEntity: Country::class, inversedBy: 'country')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $countryCode;
 
     public function getId(): ?int
     {
@@ -57,18 +58,6 @@ class ListRappel
         return $this;
     }
 
-    public function getCountry(): ?string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(string $country): self
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
     public function getPhoneNumberNational(): ?string
     {
         return $this->phoneNumberNational;
@@ -89,6 +78,18 @@ class ListRappel
     public function setPhoneNumberInternational(string $phoneNumberInternational): self
     {
         $this->phoneNumberInternational = $phoneNumberInternational;
+
+        return $this;
+    }
+
+    public function getCountryCode(): ?Country
+    {
+        return $this->countryCode;
+    }
+
+    public function setCountryCode(?Country $countryCode): self
+    {
+        $this->countryCode = $countryCode;
 
         return $this;
     }
