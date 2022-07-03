@@ -8,16 +8,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\HttpClient\HttpClient;
 use App\Form\ListType;
 
 class HomeController extends AbstractController
 {
-    private $client;
+    private $httpClient;
 
-    public function __construct(HttpClientInterface $client)
+    public function __construct()
     {
-        $this->client = $client;
+        $this->httpClient = HttpClient::create([
+            'auth_basic' => ['api', 'azpihviyazfb']
+        ]);
     }
 
     #[Route('', name: 'app_home')]
@@ -50,10 +52,19 @@ class HomeController extends AbstractController
     }
 
     public function verifyPhoneNumber($params): array{
-        dd($params);
-        $response = $this->client->request(
+        //vérification du numéro de téléphone
+        $response = $this->httpCient->request(
             'POST',
-            'http://tst.oliverstore.com:3000/api/v1/validate'
+            'http://tst.oliverstore.com:3000/api/v1/validate', [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ],
+                'body' => [
+                    'phoneNumber'=> $params->phoneNumberNational,
+                    'countryCode'=> $params->countryCode->code
+                ]
+            ]
         );
+        dd($response);
     }
 }

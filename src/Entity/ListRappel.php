@@ -12,24 +12,24 @@ class ListRappel
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    public $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $firstName;
+    public $firstName;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $lastName;
+    public $lastName;
 
     #[ORM\Column(type: 'string', length: 15)]
     #[Assert\Regex('/^\d{10}/')]
-    private $phoneNumberNational;
+    public $phoneNumberNational;
 
     #[ORM\Column(type: 'string', length: 15)]
-    private $phoneNumberInternational;
+    public $phoneNumberInternational;
 
-    #[ORM\ManyToOne(targetEntity: Country::class, inversedBy: 'country')]
+    #[ORM\ManyToOne(targetEntity: Country::class, inversedBy: 'code')]
     #[ORM\JoinColumn(nullable: false)]
-    private $countryCode;
+    public $countryCode;
 
     public function getId(): ?int
     {

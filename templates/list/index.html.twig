@@ -2,10 +2,11 @@
 
 {% block body %}
 <style>
-
+    #return { border-radius: 4px; border-color: #ed7941; color: #ed7941; }
 </style>
 
 <div class="container">
+    <a type="button" id="return" class="btn" href="https://localhost/"><</a>
     <table class="table table-sm">
         <thead>
             <th>ID</th>
@@ -16,22 +17,16 @@
             <th>Phone number international</th>
         </thead>
         <tbody>
-            <tr>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-            </tr>
-            <tr>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-            </tr>
+            {% for rappel in listRappel %}
+                <tr>
+                    <td>{{rappel.id}}</td>
+                    <td>{{rappel.firstName}}</td>
+                    <td>{{rappel.lastName}}</td>
+                    <td>{{rappel.countryCode.code}}</td>
+                    <td>{{rappel.phoneNumberNational}}</td>
+                    <td>{{rappel.phoneNumberInternational}}</td>
+                </tr>
+            {% endfor %}    
         </tbody>
     </table>
 </div>
