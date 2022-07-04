@@ -36,15 +36,15 @@ class HomeController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
 
             $this->verifyPhoneNumber($form->getData());
+            $listRappel->phoneNumberInternational = "+33" . $listRappel->phoneNumberNational;
 
             //enregistrement en bdd
             $entityManager->persist($listRappel);
             $entityManager->flush();
 
-            //redirection vers la route 'form'
-            return $this->redirectToRoute('success');
+            //redirection vers la route 'success'
+            return $this->redirectToRoute('app_success');
         }
-
 
         return $this->render('home/index.html.twig', [
             'form' => $form->createView()
@@ -53,16 +53,16 @@ class HomeController extends AbstractController
 
     public function verifyPhoneNumber($params): array{
         //vérification du numéro de téléphone
-        $response = $this->httpCient->request(
+        $response = $this->httpClient->request(
             'POST',
             'http://tst.oliverstore.com:3000/api/v1/validate', [
                 'headers' => [
                     'Content-Type' => 'application/json',
                 ],
-                'body' => [
+                'body' => json_encode(array(
                     'phoneNumber'=> $params->phoneNumberNational,
                     'countryCode'=> $params->countryCode->code
-                ]
+                ))
             ]
         );
         dd($response);
