@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpClient\HttpClient;
 use App\Form\ListType;
+use Symfony\Component\HttpClient\Response\CurlResponse;
 
 class HomeController extends AbstractController
 {
@@ -35,15 +36,20 @@ class HomeController extends AbstractController
         //si le formulaire est valide est s'il est envoyé
         if($form->isSubmitted() && $form->isValid()) {
 
-            $this->verifyPhoneNumber($form->getData());
-            $listRappel->phoneNumberInternational = "+33" . $listRappel->phoneNumberNational;
+            $verifPhoneNumber = $this->verifyPhoneNumber($form->getData());
 
-            //enregistrement en bdd
-            $entityManager->persist($listRappel);
-            $entityManager->flush();
+            if($verifPhoneNumber[0]->output->isValid){
+                $listRappel->phoneNumberInternational = $verifPhoneNumber[0]->output->internationalStrict;
 
-            //redirection vers la route 'success'
-            return $this->redirectToRoute('app_success');
+                //enregistrement en bdd
+                $entityManager->persist($listRappel);
+                $entityManager->flush();
+    
+                //redirection vers la route 'success'
+                return $this->redirectToRoute('app_success');
+            }else{
+                die("Numéro de téléphone non compatible avec le pays sélectionné. Veuillez revenir sur la page précédente.");
+            }
         }
 
         return $this->render('home/index.html.twig', [
@@ -53,18 +59,20 @@ class HomeController extends AbstractController
 
     public function verifyPhoneNumber($params): array{
         //vérification du numéro de téléphone
+        
+        
         $response = $this->httpClient->request(
             'POST',
             'http://tst.oliverstore.com:3000/api/v1/validate', [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                ],
-                'body' => json_encode(array(
-                    'phoneNumber'=> $params->phoneNumberNational,
-                    'countryCode'=> $params->countryCode->code
-                ))
+                'json' => [
+                    [
+                        'phoneNumber'=>$params->phoneNumberNational,
+                        'countryCode'=>$params->countryCode->code
+                    ]
+                ]
             ]
         );
-        dd($response);
+
+        return json_decode($response->getContent());
     }
 }
