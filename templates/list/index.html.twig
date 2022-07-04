@@ -3,31 +3,36 @@
 {% block body %}
 <style>
     #return { border-radius: 4px; border-color: #ed7941; color: #ed7941; }
+    .body { display: flex;  flex-direction: row; }
 </style>
 
-<div class="container">
-    <a type="button" id="return" class="btn" href="https://localhost/"><</a>
+<div class="body">
+<div class="col-lg-1">
+    <a type="button" id="return" class="btn" href="https://localhost/">< Accueil</a>
+</div>
+<div class="col-lg-10">
     <table class="table table-sm">
         <thead>
-            <th>ID</th>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Country</th>
-            <th>Phone number national</th>
-            <th>Phone number international</th>
+            <th class="text-center">ID</th>
+            <th class="text-center">First name</th>
+            <th class="text-center">Last name</th>
+            <th class="text-center">Country</th>
+            <th class="text-center">Phone number national</th>
+            <th class="text-center">Phone number international</th>
         </thead>
         <tbody>
             {% for rappel in listRappel %}
                 <tr>
-                    <td>{{rappel.id}}</td>
-                    <td>{{rappel.firstName}}</td>
-                    <td>{{rappel.lastName}}</td>
-                    <td>{{rappel.countryCode.code}}</td>
-                    <td>{{rappel.phoneNumberNational}}</td>
-                    <td>{{rappel.phoneNumberInternational}}</td>
+                    <td class="text-center">{{rappel.id}}</td>
+                    <td class="text-center">{{rappel.firstName}}</td>
+                    <td class="text-center">{{rappel.lastName}}</td>
+                    <td class="text-center">{{rappel.countryCode.code}}</td>
+                    <td class="text-center">{{rappel.phoneNumberNational}}</td>
+                    <td class="text-center">{{rappel.phoneNumberInternational}}</td>
                 </tr>
             {% endfor %}    
         </tbody>
     </table>
+</div>
 </div>
 {% endblock %}

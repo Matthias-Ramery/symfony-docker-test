@@ -58,9 +58,8 @@ class HomeController extends AbstractController
     }
 
     public function verifyPhoneNumber($params): array{
+        
         //vérification du numéro de téléphone
-        
-        
         $response = $this->httpClient->request(
             'POST',
             'http://tst.oliverstore.com:3000/api/v1/validate', [

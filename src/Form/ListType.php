@@ -35,7 +35,7 @@ class ListType extends AbstractType
                 ]
             )
             ->add('send', SubmitType::class, [
-                'label' => 'Envoyer'
+                'label' => 'Call me !'
             ])
 
         ;
